@@ -1,11 +1,15 @@
 from setuptools import setup, find_packages
 
-with open("Readme.md", "r") as fh:
-    long_description = fh.read()
+try:
+    with open("Readme.md", "r") as fh:
+        long_description = fh.read()
+except:
+    long_description = "[yamlgen][pypi-url] is an utility ```python``` library on [PyPI][pypi-url]. It's a yaml " \
+                       "generator. It convert jsonstring to yaml file. "
 
 setup(
     name="yamlgen",
-    version="1.0.0",
+    version="1.0.2",
     author="Razaq Kloc",
     author_email="razaqkor@gmail.com",
     description="A package to generate yaml file. Convert Json String to Yaml",
