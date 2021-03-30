@@ -4,11 +4,10 @@ name: build
 
 steps:
 - name: build
-  image: alpine
+  image: python:3.7.2
   commands:
   - ls -la
-  - apk add --no-cache python3 py3-pip
-  - version=1.0.3 python3 setup.py sdist
+  - version=1.0.3 python setup.py sdist
 
 ---
 
@@ -16,9 +15,20 @@ kind: pipeline
 type: docker
 name: deploy
 
+depends_on:
+- build
+
+trigger:
+  status:
+    # Only runs if the first pipeline was fully successful
+    - success
+
 steps:
 - name: build
-  image: alpine
+  image: python:3.7.2
+  volumes:
+    - name: pip_cache
+      path: /root/.cache/pip
   environment:
     TWINE_USERNAME:
       from_secret: TWINE_USERNAME
@@ -26,7 +36,7 @@ steps:
       from_secret: TWINE_PASSWORD
   commands:
   - ls -la
-  - pip3 install twine
+  - pip install twine
   - twine upload dist/*
-  depends_on:
-  - build
+  when:
+    branch: master
