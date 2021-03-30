@@ -7,6 +7,7 @@ steps:
   image: alpine
   commands:
   - ls -la
+  - apk add --no-cache python3 py3-pip
   - version=1.0.3 python setup.py sdist
 
 ---
@@ -25,5 +26,5 @@ steps:
       from_secret: TWINE_PASSWORD
   commands:
   - ls -la
-  - pip install twine
+  - pip3 install twine
   - twine upload dist/*
