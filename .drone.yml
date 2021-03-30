@@ -5,9 +5,16 @@ name: build
 steps:
 - name: build
   image: python:3.7.2
+  volumes:
+    - name: storage
+      path: /root/storage
   commands:
   - ls -la
   - version=1.0.3 python setup.py sdist
+
+volumes:
+- name: storage
+  temp: {}
 
 ---
 
@@ -35,7 +42,7 @@ steps:
     TWINE_PASSWORD:
       from_secret: TWINE_PASSWORD
   commands:
-  - ls -la
+  - ls /root/storage
   - pip install twine
   - twine upload dist/*
   when:
