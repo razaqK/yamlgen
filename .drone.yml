@@ -1,14 +1,29 @@
 kind: pipeline
 type: docker
-name: greeting
+name: build
 
 steps:
-- name: en
+- name: build
   image: alpine
   commands:
-  - echo hello world
+  - ls -la
+  - version=1.0.3 python setup.py sdist
 
-- name: fr
+---
+
+kind: pipeline
+type: docker
+name: deploy
+
+steps:
+- name: build
   image: alpine
+  environment:
+    TWINE_USERNAME:
+      from_secret: TWINE_USERNAME
+    TWINE_PASSWORD:
+      from_secret: TWINE_PASSWORD
   commands:
-  - echo bonjour monde
+  - ls -la
+  - pip install twine
+  - twine upload dist/*

@@ -1,4 +1,8 @@
 from setuptools import setup, find_packages
+import os
+
+
+version = os.environ.get('version', None)
 
 try:
     with open("Readme.md", "r") as fh:
@@ -9,7 +13,7 @@ except:
 
 setup(
     name="yamlgen",
-    version="1.0.2",
+    version=version,
     author="Razaq Kloc",
     author_email="razaqkor@gmail.com",
     description="A package to generate yaml file. Convert Json String to Yaml",
