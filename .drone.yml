@@ -6,36 +6,21 @@ steps:
 - name: build
   image: python:3.7.2
   volumes:
+    - name: pip_cache
+      path: /root/.cache/pip
     - name: storage
       path: /root/storage
   commands:
   - ls -la
   - version=1.0.3 python setup.py sdist
 
-volumes:
-- name: storage
-  temp: {}
-
----
-
-kind: pipeline
-type: docker
-name: deploy
-
-depends_on:
-- build
-
-trigger:
-  status:
-    # Only runs if the first pipeline was fully successful
-    - success
-
-steps:
-- name: build
+- name: deploy
   image: python:3.7.2
   volumes:
     - name: pip_cache
       path: /root/.cache/pip
+    - name: storage
+      path: /root/storage
   environment:
     TWINE_USERNAME:
       from_secret: TWINE_USERNAME
@@ -47,3 +32,38 @@ steps:
   - twine upload dist/*
   when:
     branch: master
+
+volumes:
+- name: storage
+  temp: {}
+
+#---
+#
+#kind: pipeline
+#type: docker
+#name: deploy
+#
+#depends_on:
+#- build
+#
+#trigger:
+#  status:
+#    # Only runs if the first pipeline was fully successful
+#    - success
+#
+#steps:
+#- name: build
+#  image: python:3.7.2
+#  volumes:
+#    - name: pip_cache
+#      path: /root/.cache/pip
+#  environment:
+#    TWINE_USERNAME:
+#      from_secret: TWINE_USERNAME
+#    TWINE_PASSWORD:
+#      from_secret: TWINE_PASSWORD
+#  commands:
+#  - pip install twine
+#  - twine upload dist/*
+#  when:
+#    branch: master
