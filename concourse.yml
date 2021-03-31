@@ -24,6 +24,5 @@ jobs:
             - name: artifact
               path: yamlgen-resource/dist
           run:
-            path: ls -la
-            #args: ["setup.py sdist"]
+            path: yamlgen-resource/deplopy.sh
             dir: yamlgen-resource
