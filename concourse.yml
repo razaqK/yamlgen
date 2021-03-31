@@ -24,5 +24,5 @@ jobs:
             - name: artifact
               path: yamlgen-resource/dist
           run:
-            path: deplopy.sh
+            path: deploy.sh
             dir: yamlgen-resource
