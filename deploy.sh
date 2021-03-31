@@ -1,1 +1,1 @@
-python --version
+version=1.0.4 python setup.py sdist

@@ -24,6 +24,6 @@ jobs:
             - name: artifact
               path: yamlgen-resource/dist
           run:
-            path: python
-            args: ["--version"]
+            path: sh
+            args: ["deploy.sh"]
             dir: yamlgen-resource
