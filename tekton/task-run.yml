@@ -1,0 +1,7 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: say-something-run
+spec:
+  taskRef:
+    name: say-something
