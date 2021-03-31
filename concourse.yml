@@ -12,4 +12,4 @@ jobs:
     plan:
       - { get: yamlgen-resource, trigger: true }
       - set_pipeline: yamlgen-cicd
-        file: concourse-pipeline.yml
+        file: yamlgen-resource/concourse-pipeline.yml
