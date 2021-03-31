@@ -18,5 +18,10 @@ jobs:
           image_resource:
             type: docker-image
             source: { repository: python, tag: 3.7.2 }
+          outputs:
+            - name: artifact
+              path: yamlgen-resource/dist
           run:
-            path: version=1.0.3 python yamlgen-resource/setup.py sdist
+            path: version=1.0.3 python
+            args: ["setup.py sdist"]
+            dir: yamlgen-resource
