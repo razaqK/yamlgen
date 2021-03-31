@@ -1,5 +1,5 @@
 resources:
-- name: yamlgen-resource
+- name: yamlgen-resource-ci
   type: git
   icon: github
   source:
@@ -7,10 +7,10 @@ resources:
     branch: master
 
 jobs:
-  - name: yamlgencicd
+  - name: yamlgencicd-ci
     public: true
     plan:
-      - get: yamlgen-resource
+      - get: yamlgen-resource-ci
         trigger: true
       - task: build
         config:
@@ -19,11 +19,11 @@ jobs:
             type: docker-image
             source: { repository: python, tag: 3.7.2 }
           inputs:
-            - name: yamlgen-resource
+            - name: yamlgen-resource-ci
           outputs:
             - name: artifact
-              path: yamlgen-resource/dist
+              path: yamlgen-resource-ci/dist
           run:
             path: sh
             args: ["deploy.sh"]
-            dir: yamlgen-resource
+            dir: yamlgen-resource-ci
