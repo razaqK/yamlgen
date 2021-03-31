@@ -9,7 +9,7 @@ jobs:
   - name: yamlgen-cicd
     public: true
     plan:
-      - get: yamlgen-resource
+      - { get: yamlgen-resource, trigger: true }
       - task: build
         config:
           platform: linux
